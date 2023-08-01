@@ -1,4 +1,4 @@
-<h1 align="center">MINI POS MAJOO</h1>
+<h1 align="center">TOKO KOMPUTER</h1>
 <p align="center">by abdan syakuro</p>
 
 ## Install
