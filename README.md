@@ -22,7 +22,16 @@ php artisan serve
 ```
 
 ## Showcase
-
+- Halaman Utama
+![Dashboard](/public/images/halaman-utama.png?raw=true "Home")
+- Halaman Dashboard
+![Dashboard](/public/images/dashboard.png?raw=true "Dashboard")
+- Halaman Order (Penjualan)
+![Dashboard](/public/images/menu-order.png?raw=true "Order")
+- Halaman Order Detail
+![Dashboard](/public/images/detail-order.png?raw=true "Order Detail")
+- Halaman Produk
+![Dashboard](/public/images/menu-product.png?raw=true "Product")
 
 ## License
 
