@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->string('product_code', 10);
+            $table->string('product_name', 100);
             $table->unsignedInteger('quantity');
-            $table->double('unit_price');
+            $table->double('purchase_price');
+            $table->double('sale_price');
             $table->double('total_price');
             $table->timestamps();
         });

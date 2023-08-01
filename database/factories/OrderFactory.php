@@ -18,7 +18,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'costumer_name' => fake()->name(),
+            'customer_name' => fake()->name(),
             'customer_address' => fake()->address(),
             'total' => rand(12, 60) * 1000000,
         ];

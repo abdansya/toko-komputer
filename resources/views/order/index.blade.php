@@ -24,13 +24,13 @@
             @foreach ($orders as $key => $order)
             <tr>
                 <th scope="row">{{ $key + $orders->firstItem() }}</th>
-                <td>{{ $order->costumer_name }}</td>
+                <td>{{ $order->customer_name }}</td>
                 <td>{{ $order->customer_address }}</td>
                 <td>{{ $order->created_at->format('d-m-Y H:i:s') }}</td>
                 <td>{{ $order->orderDetails->count() }}</td>
                 <td>Rp. {{ number_format($order->total,0,'.','.') }}</td>
                 <td>
-                    <a href="#" class="btn btn-sm btn-outline-secondary mb-1">Detail</span></a>
+                    <a href="{{ url('orders/'.$order->id) }}" class="btn btn-sm btn-outline-secondary mb-1">Detail</span></a>
                 </td>
             </tr>
             @endforeach

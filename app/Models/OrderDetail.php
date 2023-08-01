@@ -14,9 +14,12 @@ class OrderDetail extends Model
         'order_id',
         'product_id',
         'product_code',
+        'product_name',
         'quantity',
-        'unit_price',
+        'purchase_price',
+        'sale_price',
         'total_price',
+        'created_at',
     ];
     
     /**

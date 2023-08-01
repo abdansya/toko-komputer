@@ -8,134 +8,37 @@
                 
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-8">
+                <canvas class="my-4 w-100" id="chartOrderDaily" width="900" height="380"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas class="my-4 w-100" id="chartProductCategory" width="900" height="380"></canvas>
+            </div>
+        </div>
 
-        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-        <h2>Section title</h2>
-        <div class="table-responsive">
+        <h3 class="mt-5">Daftar 10 Penjualan Terakhir</h3>
+        <div class="table-responsive mb-4">
             <table class="table table-striped table-sm">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
+                        <th>No</th>
+                        <th>Nama Customer</th>
+                        <th>Alamat</th>
+                        <th>Tanggal Penjualan</th>
+                        <th>Total Penjualan</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($lastOrders as $key => $order)
                     <tr>
-                        <td>1,001</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
-                        <td>dolor</td>
-                        <td>sit</td>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $order->customer_name }}</td>
+                        <td>{{ $order->customer_address }}</td>
+                        <td>{{ $order->created_at->format('d F Y') }}</td>
+                        <td>Rp. {{ number_format($order->total,0,'.','.') }}</td>
                     </tr>
-                    <tr>
-                        <td>1,002</td>
-                        <td>amet</td>
-                        <td>consectetur</td>
-                        <td>adipiscing</td>
-                        <td>elit</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>Integer</td>
-                        <td>nec</td>
-                        <td>odio</td>
-                        <td>Praesent</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>libero</td>
-                        <td>Sed</td>
-                        <td>cursus</td>
-                        <td>ante</td>
-                    </tr>
-                    <tr>
-                        <td>1,004</td>
-                        <td>dapibus</td>
-                        <td>diam</td>
-                        <td>Sed</td>
-                        <td>nisi</td>
-                    </tr>
-                    <tr>
-                        <td>1,005</td>
-                        <td>Nulla</td>
-                        <td>quis</td>
-                        <td>sem</td>
-                        <td>at</td>
-                    </tr>
-                    <tr>
-                        <td>1,006</td>
-                        <td>nibh</td>
-                        <td>elementum</td>
-                        <td>imperdiet</td>
-                        <td>Duis</td>
-                    </tr>
-                    <tr>
-                        <td>1,007</td>
-                        <td>sagittis</td>
-                        <td>ipsum</td>
-                        <td>Praesent</td>
-                        <td>mauris</td>
-                    </tr>
-                    <tr>
-                        <td>1,008</td>
-                        <td>Fusce</td>
-                        <td>nec</td>
-                        <td>tellus</td>
-                        <td>sed</td>
-                    </tr>
-                    <tr>
-                        <td>1,009</td>
-                        <td>augue</td>
-                        <td>semper</td>
-                        <td>porta</td>
-                        <td>Mauris</td>
-                    </tr>
-                    <tr>
-                        <td>1,010</td>
-                        <td>massa</td>
-                        <td>Vestibulum</td>
-                        <td>lacinia</td>
-                        <td>arcu</td>
-                    </tr>
-                    <tr>
-                        <td>1,011</td>
-                        <td>eget</td>
-                        <td>nulla</td>
-                        <td>Class</td>
-                        <td>aptent</td>
-                    </tr>
-                    <tr>
-                        <td>1,012</td>
-                        <td>taciti</td>
-                        <td>sociosqu</td>
-                        <td>ad</td>
-                        <td>litora</td>
-                    </tr>
-                    <tr>
-                        <td>1,013</td>
-                        <td>torquent</td>
-                        <td>per</td>
-                        <td>conubia</td>
-                        <td>nostra</td>
-                    </tr>
-                    <tr>
-                        <td>1,014</td>
-                        <td>per</td>
-                        <td>inceptos</td>
-                        <td>himenaeos</td>
-                        <td>Curabitur</td>
-                    </tr>
-                    <tr>
-                        <td>1,015</td>
-                        <td>sodales</td>
-                        <td>ligula</td>
-                        <td>in</td>
-                        <td>libero</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -144,30 +47,52 @@
 @section('extraJs')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.min.js"></script>
 <script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
+    let dataSetBar = {{ Js::from($datasets) }}
+    let dates = {{ Js::from($dates) }}
+    let dataBar = {
+        labels: dates,
+        datasets: dataSetBar
+    }
+
+    let labelCategoryPie = {{ Js::from($labelPie) }}
+    let dataSetPie = {{ Js::from($datasetsPie) }}
+
+    let elChartBar = document.getElementById("chartOrderDaily");
+    let myChartBar = new Chart(elChartBar, {
+        type: 'bar',
+        data: dataBar,
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Grafik Penjualan Dalam Satu Bulan'
+                }
+            }
+        },
+    });
+
+    let dataPie = {
+        labels: labelCategoryPie,
+        datasets: [{
+            label: 'Jumlah Barang Terjual',
+            data: dataSetPie,
+            hoverOffset: 4
+        }]
+    };
+    let elChartPie = document.getElementById("chartProductCategory");
+    let myChartPie = new Chart(elChartPie, {
+        type: 'pie',
+        data: dataPie,
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Penjualan Berdasarkan Kategori',
+                }
             }
         }
     });
